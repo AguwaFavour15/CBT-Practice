@@ -1,0 +1,138 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.header-section {
+    background-color: #343a40;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.header-section h1 {
+    font-weight: 700;
+}
+
+.sidebar {
+    padding-right: 15px;
+}
+
+.subject-list {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.subject-item {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.subject-item:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.subject-item.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.category-title {
+    margin-top: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #dee2e6;
+    color: #495057;
+}
+
+.test-interface {
+    padding-left: 0;
+}
+
+.question-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.question-text {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.options-container {
+    margin-left: 10px;
+}
+
+.option {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.option:hover {
+    background-color: #f1f1f1;
+}
+
+.option input[type="radio"] {
+    margin-right: 10px;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.results-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.review-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid transparent;
+    border-radius: 4px;
+}
+
+.review-item.correct {
+    background-color: #e6ffed;
+    border-left-color: #28a745;
+}
+
+.review-item.incorrect {
+    background-color: #fff3f3;
+    border-left-color: #dc3545;
+}
+
+.explanation {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+[ng-cloak] {
+    display: none !important;
+}
+
+.progress {
+    height: 10px;
+    width: 200px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.badge {
+    font-size: 0.9em;
+    padding: 5px 10px;
+}

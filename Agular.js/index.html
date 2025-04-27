@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cbtApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frist Agular Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .setup-panel, .test-panel, .results-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .setup-panel:hover, .test-panel:hover, .results-panel:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        select:focus, input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+        
+        .btn-warning:hover {
+            background-color: #d35400;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .timer.warning {
+            color: var(--warning-color);
+            animation: pulse 1s infinite;
+        }
+        
+        .timer.danger {
+            color: var(--danger-color);
+            animation: pulse 0.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+        
+        .option.selected {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-color: var(--danger-color);
+        }
+        
+        .option input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .results-summary {
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 500;
+        }
+        
+        .result-value {
+            font-weight: bold;
+        }
+        
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .subject-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subject-card.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .subject-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .subject-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body ng-controller="CBTController">
+    <header class="animate__animated animate__fadeInDown">
+        <div class="container">
+            <h1>Advanced CBT Practice Test</h1>
+            <p class="subtitle">Test your knowledge across various subjects</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Setup Panel -->
+        <div class="setup-panel animate__animated animate__fadeIn" ng-show="currentView === 'setup'">
+            <h2><i class="fas fa-cog"></i> Test Setup</h2>
+            
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" ng-model="user.name" placeholder="Enter your name">
+            </div>
+            
+            <div class="form-group">
+                <label>Select Subjects</label>
+                <div class="subject-grid">
+                    <div class="subject-card animate__animated animate__fadeIn" 
+                         ng-repeat="subject in allSubjects" 
+                         ng-click="toggleSubjectSelection(subject)"
+                         ng-class="{'selected': isSubjectSelected(subject)}">
+                        <div class="subject-icon">
+                            <i class="fas" ng-class="getSubjectIcon(subject)"></i>
+                        </div>
+                        <h3>{{subject}}</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="questionCount">Number of Questions (1-100)</label>
+                <input type="number" id="questionCount" ng-model="settings.questionCount" min="1" max="100" placeholder="Enter number of questions">
+            </div>
+            
+            <div class="form-group">
+                <label for="timeLimit">Time Limit (minutes, max 120)</label>
+                <input type="number" id="timeLimit" ng-model="settings.timeLimit" min="1" max="120" placeholder="Enter time limit in minutes">
+            </div>
+            
+            <div class="form-group">
+                <label for="difficulty">Difficulty Level</label>
+                <select id="difficulty" ng-model="settings.difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            
+            <button class="btn-secondary" ng-click="startTest()" ng-disabled="!canStartTest()">
+                <i class="fas fa-play"></i> Start Test
+            </button>
+        </div>
+        
+        <!-- Test Panel -->
+        <div class="test-panel animate__animated animate__fadeIn" ng-show="currentView === 'test'">
+            <div class="timer" ng-class="{'warning': timeLeft.minutes < 5 && timeLeft.minutes >= 1, 'danger': timeLeft.minutes < 1}">
+                <i class="fas fa-clock"></i> Time Left: {{timeLeft.minutes | numberPad:2}}:{{timeLeft.seconds | numberPad:2}}
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" ng-style="{'width': (currentQuestionIndex / questions.length) * 100 + '%'}"></div>
+                </div>
+                <div class="progress-text">
+                    Question {{currentQuestionIndex + 1}} of {{questions.length}}
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-number">Question {{currentQuestionIndex + 1}}</div>
+                <div class="question-text">{{currentQuestion.text}}</div>
+                
+                <div class="options-container">
+                    <div class="option" 
+                         ng-repeat="option in currentQuestion.options"
+                         ng-click="selectOption(option)"
+                         ng-class="{'selected': isOptionSelected(option), 'correct': showResults && option.isCorrect, 'incorrect': showResults && !option.isCorrect && isOptionSelected(option)}">
+                        <input type="radio" 
+                               name="questionOption" 
+                               ng-model="currentQuestion.selectedOption" 
+                               ng-value="option"
+                               ng-disabled="showResults">
+                        {{option.text}}
+                        <span class="option-feedback" ng-if="showResults">
+                            <i class="fas fa-check" ng-if="option.isCorrect"></i>
+                            <i class="fas fa-times" ng-if="!option.isCorrect && isOptionSelected(option)"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn-warning" ng-click="previousQuestion()" ng-disabled="currentQuestionIndex === 0">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                
+                <button class="btn-secondary" ng-click="nextQuestion()" ng-hide="isLastQuestion() || showResults">
+                    <i class="fas fa-arrow-right"></i> Next
+                </button>
+                
+                <button class="btn-secondary" ng-click="finishTest()" ng-show="isLastQuestion() && !showResults">
+                    <i class="fas fa-flag-checkered"></i> Finish Test
+                </button>
+                
+                <button class="btn-danger" ng-click="showResults = true" ng-show="!showResults && !isLastQuestion()">
+                    <i class="fas fa-stop"></i> End Test Now
+                </button>
+                
+                <button class="btn-secondary" ng-click="viewResults()" ng-show="showResults">
+                    <i class="fas fa-chart-bar"></i> View Results
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Panel -->
+        <div class="results-panel animate__animated animate__fadeIn" ng-show="currentView === 'results'">
+            <h2><i class="fas fa-chart-pie"></i> Test Results</h2>
+            
+            <div class="results-summary">
+                <div class="score">{{calculatePercentage()}}%</div>
+                
+                <div class="result-item">
+                    <span class="result-label">Name:</span>
+                    <span class="result-value">{{user.name}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Subjects:</span>
+                    <span class="result-value">{{selectedSubjects.join(', ')}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Total Questions:</span>
+                    <span class="result-value">{{questions.length}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Correct Answers:</span>
+                    <span class="result-value">{{countCorrectAnswers()}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Wrong Answers:</span>
+                    <span class="result-value">{{countWrongAnswers()}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Time Spent:</span>
+                    <span class="result-value">{{formatTimeSpent()}}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Date:</span>
+                    <span class="result-value">{{testDate | date:'medium'}}</span>
+                </div>
+            </div>
+            
+            <button class="btn-secondary" ng-click="startNewTest()">
+                <i class="fas fa-redo"></i> Start New Test
+            </button>
+            
+            <button class="btn-warning" ng-click="reviewTest()">
+                <i class="fas fa-search"></i> Review Test
+            </button>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal animate__animated animate__fadeIn" ng-show="showConfirmationModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-exclamation-triangle"></i> Confirm Action</h3>
+            <p>{{confirmationMessage}}</p>
+            
+            <div class="modal-buttons">
+                <button class="btn-secondary" ng-click="confirmAction(true)">
+                    <i class="fas fa-check"></i> Yes
+                </button>
+                
+                <button class="btn-danger" ng-click="confirmAction(false)">
+                    <i class="fas fa-times"></i> No
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
