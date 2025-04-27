@@ -25,10 +25,47 @@
         .floating {
             animation: float 4s ease-in-out infinite;
         }
+        /* C Preloader Styles */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #3b82f6; }
+}
+
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #3b82f6;
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .75s step-end infinite;
+}
     </style>
 </head>
 <body class="auth-bg min-h-screen flex items-center justify-center p-4 font-sans">
-    <div class="container mx-auto max-w-sm">
+
+<!-- C-themed Preloader -->
+<div id="c-preloader" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 transition-opacity duration-500">
+  <div class="relative w-64 h-64 mb-8">
+    <!-- C Logo Animation -->
+    <div class="absolute inset-0 border-8 border-blue-500 rounded-full animate-spin" style="animation-duration: 2s"></div>
+    <div class="absolute inset-4 border-l-8 border-blue-500 rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-mono font-bold">C</div>
+  </div>
+  
+  <!-- Loading Text with Typing Animation -->
+  <div class="text-center">
+    <p id="loading-text" class="text-white font-mono text-xl mb-4">$ gcc main.c</p>
+    <div class="w-64 bg-gray-700 h-2 rounded-full overflow-hidden">
+      <div id="loading-bar" class="bg-blue-500 h-full" style="width: 0%"></div>
+    </div>
+  </div>
+</div>
+  <div class="container mx-auto max-w-sm">
         <!-- Auth Container -->
         <div id="auth-container" class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden transition-all duration-500 transform hover:scale-[1.01]">
             <!-- Toggle Buttons -->
@@ -146,5 +183,57 @@
     </div>
 
     <script src="auth.js"></script>
-</body>
+<script>
+  // C-themed Preloader Animation
+document.addEventListener('DOMContentLoaded', function() {
+  const preloader = document.getElementById('c-preloader');
+  const loadingText = document.getElementById('loading-text');
+  const loadingBar = document.getElementById('loading-bar');
+  
+  // Compilation messages simulation
+  const compileMessages = [
+    "Please be patient....",
+    "getting your getting...",
+    "Linking objects...",
+    "Building executable...",
+    // "Optimizing code...",
+    "Running program..."
+  ];
+  
+  let currentMessage = 0;
+  let progress = 0;
+  
+  // Update loading text and bar
+  function updateLoader() {
+    if (currentMessage < compileMessages.length) {
+      loadingText.textContent = compileMessages[currentMessage];
+      loadingText.classList.add('typing-animation');
+      
+      setTimeout(() => {
+        loadingText.classList.remove('typing-animation');
+        currentMessage++;
+        
+        // Update progress bar
+        progress += 100 / (compileMessages.length - 1);
+        loadingBar.style.width = `${Math.min(progress, 100)}%`;
+        
+        updateLoader();
+      }, 2000);
+    } else {
+      // Hide preloader when done
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 500);
+      }, 500);
+    }
+  }
+  
+  // Start the loader
+  updateLoader();
+});
+</script>
+
+  </body>
 </html>
