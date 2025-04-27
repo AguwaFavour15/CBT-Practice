@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .welcome-bg {
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="welcome-bg min-h-screen flex items-center justify-center p-4 font-sans">
+    <div class="text-center max-w-2xl mx-auto">
+        <div class="floating inline-block mb-6">
+            <i class="fas fa-check-circle text-8xl text-white/90"></i>
+        </div>
+        
+        <h1 id="welcome-title" class="text-4xl md:text-5xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+            Welcome, <span id="user-name" class="text-yellow-300">User</span>!
+        </h1>
+        
+        <p class="text-xl text-white/80 mb-8 animate__animated animate__fadeIn animate__delay-1s">
+            You've successfully signed in to your account
+        </p>
+        
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto mb-8 animate__animated animate__fadeIn animate__delay-2s">
+            <div class="flex items-center justify-center space-x-4">
+                <div class="bg-white/20 p-3 rounded-full">
+                    <i class="fas fa-envelope text-white text-xl"></i>
+                </div>
+                <div class="text-left">
+                    <p class="text-white/70 text-sm">Logged in as</p>
+                    <p id="user-email" class="text-white font-medium"></p>
+                </div>
+            </div>
+        </div>
+        
+        <button id="logout-btn" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg backdrop-blur-sm transition-all border border-white/20 hover:border-white/30 animate__animated animate__fadeIn animate__delay-3s">
+            <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+        </button>
+    </div>
+
+    <!-- Confetti Effect -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none"></canvas>
+
+    
+</body>
+</html>
